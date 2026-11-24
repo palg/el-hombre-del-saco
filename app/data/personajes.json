@@ -1,0 +1,124 @@
+{
+  "principales": [
+    {
+      "id": 1,
+      "tipo": "principal",
+      "rol": "Hermano de Bernardo",
+      "descripcion": "Eres el hermano/a de Bernardo. Tienes una relación especial con él que nadie más puede tener.",
+      "introduccion": "\"Mi nombre es ___. Bernardo era mi hermano. Por aquel entonces yo tenía __ años,… <seguir>\"",
+      "preguntas_protagonista": [
+        "¿Puedes presentarte?",
+        "¿Cómo eras de niño/a?",
+        "¿A qué te dedicabas?",
+        "¿Qué te gustaba hacer en tu tiempo libre?"
+      ],
+      "pregunta_interaccion": "¿Puedes contarnos algo de tu relación con este personaje?",
+      "instruccion_final": "Escribe el nombre del personaje al dorso y coloca esta carta boca abajo frente a ti como identificación."
+    },
+    {
+      "id": 2,
+      "tipo": "principal",
+      "rol": "Amigo de Bernardo",
+      "descripcion": "Eres amigo/a de Bernardo desde la infancia. Compartes con él recuerdos únicos.",
+      "introduccion": "\"Mi nombre es ___. Bernardo era mi amigo. Por aquel entonces yo tenía __ años, … <seguir>\"",
+      "preguntas_protagonista": [
+        "¿Puedes presentarte?",
+        "¿Cómo eras de niño/a?",
+        "¿A qué te dedicabas?",
+        "¿Qué te gustaba hacer en tu tiempo libre?"
+      ],
+      "pregunta_interaccion": "¿Puedes contarnos algo de tu relación con este personaje?",
+      "instruccion_final": "Escribe el nombre del personaje al dorso y coloca esta carta boca abajo frente a ti como identificación."
+    },
+    {
+      "id": 3,
+      "tipo": "principal",
+      "rol": "Amigo de Bernardo",
+      "descripcion": "Eres amigo/a de Bernardo desde la infancia. Compartes con él recuerdos únicos.",
+      "introduccion": "\"Mi nombre es ___. Bernardo era mi amigo. Por aquel entonces yo tenía __ años, … <seguir>\"",
+      "preguntas_protagonista": [
+        "¿Puedes presentarte?",
+        "¿Cómo eras de niño/a?",
+        "¿A qué te dedicabas?",
+        "¿Qué te gustaba hacer en tu tiempo libre?"
+      ],
+      "pregunta_interaccion": "¿Puedes contarnos algo de tu relación con este personaje?",
+      "instruccion_final": "Escribe el nombre del personaje al dorso y coloca esta carta boca abajo frente a ti."
+    },
+    {
+      "id": 4,
+      "tipo": "principal",
+      "rol": "Amigo de Bernardo",
+      "descripcion": "Eres amigo/a de Bernardo desde la infancia. Compartes con él recuerdos únicos.",
+      "introduccion": "\"Mi nombre es ___. Bernardo era mi amigo. Por aquel entonces yo tenía __ años, … <seguir>\"",
+      "preguntas_protagonista": [
+        "¿Puedes presentarte?",
+        "¿Cómo eras de niño/a?",
+        "¿A qué te dedicabas?",
+        "¿Qué te gustaba hacer en tu tiempo libre?"
+      ],
+      "pregunta_interaccion": "¿Puedes contarnos algo de tu relación con este personaje?",
+      "instruccion_final": "Escribe el nombre del personaje al dorso y coloca esta carta boca abajo frente a ti."
+    }
+  ],
+  "secundarios": [
+    {
+      "id": 5,
+      "tipo": "secundario",
+      "nombre": "Bernardo",
+      "edad": 7,
+      "cita": "\"Bernardo era un niño tranquilo y amable. Siempre que se le presentaba la oportunidad le gustaba estar con nosotros. Aunque era el más pequeño, se adaptaba bien a nuestro ritmo\"",
+      "descripcion": "Niño tranquilo y amable, el más pequeño del grupo. Se adapta bien al ritmo de sus amigos mayores.",
+      "preguntas_protagonista": [
+        "¿Cómo es Bernardo?",
+        "¿Qué le gustaba hacer en su tiempo libre?",
+        "¿Puedes contarnos algo de tu relación con Bernardo?",
+        "¿Recuerdas alguna anécdota con Bernardo?"
+      ],
+      "pregunta_interaccion": [
+        "¿Qué recuerdas de Bernardo?",
+        "¿Puedes contarnos algo de tu relación con Bernardo?"
+      ]
+    },
+    {
+      "id": 6,
+      "tipo": "secundario",
+      "nombre": "Julio \"el loco\"",
+      "edad": 27,
+      "cita": "\"Casi todo el mundo conocía a Julio el loco. Siempre escuchabas alguna nueva habladuría sobre él. La gente decía que nació así porque su madre se acostó con el diablo\"",
+      "descripcion": "Apodado así por tener un extraño comportamiento. Carácter embrutecido y sanguinario. Viste con ropa sucia y tiene la cara llena de arañazos. Lleva una escopeta colgada del hombro."
+    },
+    {
+      "id": 7,
+      "tipo": "secundario",
+      "nombre": "Antonio Leona",
+      "edad": 42,
+      "cita": "\"Antonio Leona era una persona muy conocida y respetada en la zona. Caracterizado siempre con una presencia impoluta era fácil encontrárselo en cualquier acontecimiento importante de la zona\"",
+      "descripcion": "Vestido siempre con ropas caras, bien peinado y con el bigote bien cuidado. Lleva gafas y una chaqueta larga negra. Regenta la botica de Gádor y es el juez de paz del pueblo."
+    },
+    {
+      "id": 8,
+      "tipo": "secundario",
+      "nombre": "Francisco Leona",
+      "edad": 72,
+      "cita": "\"Francisco Leona era un barbero bastante conocido en Gádor. Normalmente solía sorprender encontrarse con una persona de tanta edad y su rostro serio y deteriorado no era precisamente una invitación a acercarse a él\"",
+      "descripcion": "Vestido siempre con ropas viejas e informales. Barbero de Gádor. Rostro serio y demacrado. Siempre de mal humor. Voz grave y rota."
+    },
+    {
+      "id": 9,
+      "tipo": "secundario",
+      "nombre": "Agustina \"La curandera\"",
+      "edad": 54,
+      "cita": "\"Agustina Rodriguez era conocida en toda la comarca como Agustina 'La curandera'. Se decía de ella que hacía pactos con el demonio y ante cualquier enfermedad, la gente prefería acudir a ella antes que buscar al médico.\"",
+      "descripcion": "Mujer de aspecto bondadoso. Conocida curandera en toda la comarca. Vive a las afueras de Gádor en el Cortijo de la Luna."
+    },
+    {
+      "id": 10,
+      "tipo": "secundario",
+      "nombre": "Francisco \"El moruno\"",
+      "edad": 44,
+      "cita": "\"Francisco 'El moruno' era un aparcero que trabajaba en uno de los tantos cortijos de la zona. Era conocido en el pueblo que llevaba ya bastante tiempo con serios problemas de salud y que no conseguía superarlos\"",
+      "descripcion": "Hombre de tez oscura. Casado y con familia. Aparcero en un cortijo de Gádor."
+    }
+  ]
+}

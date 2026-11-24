@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#241e17"/>
+      <stop offset="100%" stop-color="#0a0a0a"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#e8c88a"/>
+      <stop offset="50%" stop-color="#c8a76a"/>
+      <stop offset="100%" stop-color="#805520"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="10" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="512" height="512" rx="112" fill="url(#bg)"/>
+  <rect width="480" height="480" x="16" y="16" rx="96" fill="none" stroke="url(#gold)" stroke-width="4" stroke-opacity="0.4"/>
+
+  <!-- Saco / Silhouette Shape -->
+  <path d="M 256 120 C 230 120, 215 140, 205 160 C 190 190, 160 250, 150 320 C 140 390, 180 430, 256 430 C 332 430, 372 390, 362 320 C 352 250, 322 190, 307 160 C 297 140, 282 120, 256 120 Z" 
+        fill="#1a1410" stroke="url(#gold)" stroke-width="8" stroke-linejoin="round"/>
+
+  <!-- Rope tie on the sack -->
+  <path d="M 205 165 Q 256 185 307 165 Q 256 150 205 165 Z" fill="url(#gold)"/>
+  <path d="M 235 175 Q 215 220 220 240 M 265 175 Q 285 220 275 245" stroke="url(#gold)" stroke-width="6" fill="none" stroke-linecap="round"/>
+
+  <!-- Coin inside sack with glowing symbol -->
+  <circle cx="256" cy="310" r="54" fill="#0d0d0d" stroke="url(#gold)" stroke-width="6" filter="url(#glow)"/>
+  
+  <!-- Glowing Eye / Candle Light symbol inside coin -->
+  <path d="M 220 310 Q 256 280 292 310 Q 256 340 220 310 Z" fill="none" stroke="url(#gold)" stroke-width="5"/>
+  <circle cx="256" cy="310" r="14" fill="url(#gold)"/>
+
+  <!-- Vintage corner accents -->
+  <path d="M 45 75 L 75 45 M 45 45 L 90 45 M 45 45 L 45 90" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 467 75 L 437 45 M 467 45 L 422 45 M 467 45 L 467 90" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 45 437 L 75 467 M 45 467 L 90 467 M 45 467 L 45 422" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+  <path d="M 467 437 L 437 467 M 467 467 L 422 467 M 467 467 L 467 422" stroke="url(#gold)" stroke-width="3" stroke-linecap="round" opacity="0.6"/>
+</svg>

@@ -1,0 +1,55 @@
+[
+  {
+    "id": 6,
+    "nivel": 6,
+    "texto": "El grupo puede ayudarse",
+    "puede_ayudarse": true,
+    "descripcion": "Vuestro coraje está al máximo. Podéis ayudaros mutuamente en los desafíos."
+  },
+  {
+    "id": 5,
+    "nivel": 5,
+    "texto": "El grupo puede ayudarse",
+    "puede_ayudarse": true,
+    "descripcion": "Vuestro coraje sigue siendo fuerte. Podéis ayudaros mutuamente en los desafíos."
+  },
+  {
+    "id": 4,
+    "nivel": 4,
+    "texto": "El grupo puede ayudarse",
+    "puede_ayudarse": true,
+    "descripcion": "Vuestro coraje empieza a flaquear. Aún podéis ayudaros mutuamente en los desafíos."
+  },
+  {
+    "id": 3,
+    "nivel": 3,
+    "texto": "El grupo ya no puede ayudarse",
+    "puede_ayudarse": false,
+    "descripcion": "Vuestro coraje está bajo. Ya no podéis ayudaros mutuamente en los desafíos."
+  },
+  {
+    "id": 2,
+    "nivel": 2,
+    "texto": "El grupo ya no puede ayudarse",
+    "puede_ayudarse": false,
+    "descripcion": "Vuestro coraje está muy bajo. Ya no podéis ayudaros mutuamente en los desafíos."
+  },
+  {
+    "id": 1,
+    "nivel": 1,
+    "texto": "Apenas os quedan fuerzas para seguir adelante.",
+    "puede_ayudarse": false,
+    "descripcion": "Cuando viajeis a otra localización, tenéis que realizar un breve descanso.",
+    "descanso": {
+      "imagina": "Inventa una localización de paso donde descansar unos instantes.",
+      "preguntas": [
+        "¿Cómo te sentías?",
+        "¿A dónde fuisteis para despejaros?",
+        "¿Qué historia tuya guarda relación con ese sitio?",
+        "¿Qué hicisteis allí?"
+      ],
+      "pregunta_interaccion": "¿Cómo ayudaste?",
+      "fin": "Devuelve las cartas de Coraje 1 y 2 al mazo de Coraje. Continúa con el viaje a la localización a la que ibais."
+    }
+  }
+]

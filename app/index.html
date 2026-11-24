@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="theme-color" content="#0c0b0a" />
+  <title>El Hombre del Saco</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="manifest" href="manifest.json" />
+</head>
+<body>
+
+<!-- PANTALLA DE CARGA -->
+<div id="loading-screen">
+  <div class="loading-title">El Hombre del Saco</div>
+  <div class="loading-spinner"></div>
+</div>
+
+<!-- APLICACIÓN PRINCIPAL (100dvh, SIN SCROLL DE PANTALLA) -->
+<div id="app">
+
+  <!-- CABECERA SUPERIOR FIJA (HUD) -->
+  <header class="nav-bar">
+    <div class="nav-title-group">
+      <span class="nav-logo-text" onclick="App.navegarA('home')">🃏 El Hombre del Saco</span>
+    </div>
+    <div class="nav-actions">
+      <!-- Indicador interactivo de Protagonista -->
+      <div id="hud-protagonista" class="header-protagonista-badge" onclick="App.abrirModalJugadores()" title="Toca para cambiar de turno o ver personaje">
+        <span class="coin-icon">🪙</span>
+        <span class="player-name" id="hud-protagonista-nombre">—</span>
+      </div>
+
+      <!-- Indicador interactivo de Coraje -->
+      <div id="hud-coraje" class="header-coraje-badge" onclick="App.abrirModalCoraje()" title="Toca para gestionar coraje">
+        <span>💛</span>
+        <span id="hud-coraje-val">6</span>
+      </div>
+
+      <!-- Botón de búsqueda rápida -->
+      <button class="nav-icon-btn" onclick="App.abrirBuscador()" title="Buscar carta o regla">
+        🔍
+      </button>
+
+      <!-- Botón de Menú de Partida / Nueva Partida / Opciones -->
+      <button class="nav-icon-btn" onclick="App.abrirMenuPartida()" title="Menú de partida y opciones">
+        ⚙️
+      </button>
+    </div>
+  </header>
+
+  <!-- BARRA DE ACCESO RÁPIDO POR ICONOS (Pills con contadores) -->
+  <div id="status-bar" class="status-pills-bar">
+    <div class="status-pill highlight" id="pill-localizaciones" onclick="App.abrirModalLocalizaciones()">
+      <span>🗺️</span>
+      <span id="pill-loc-nombre">Localización</span>
+      <span class="status-pill-count" id="pill-loc-count">0</span>
+    </div>
+
+    <div class="status-pill" id="pill-pistas" onclick="App.abrirModalPistas()">
+      <span>🔍</span>
+      <span>Pistas</span>
+      <span class="status-pill-count" id="pill-pistas-count">0</span>
+    </div>
+
+    <div class="status-pill" id="pill-consecuencias" onclick="App.abrirModalConsecuencias()">
+      <span>📋</span>
+      <span>Consecuencias</span>
+      <span class="status-pill-count" id="pill-cons-count">0</span>
+    </div>
+
+    <div class="status-pill" id="pill-personajes" onclick="App.abrirModalPersonajes()">
+      <span>👤</span>
+      <span>Personajes</span>
+      <span class="status-pill-count" id="pill-pers-count">0</span>
+    </div>
+  </div>
+
+  <!-- ESCENARIO PRINCIPAL (VIEWPORTS CONTENIDOS) -->
+  <main class="main-stage">
+
+    <!-- VISTA: ESCENA / CARTA ACTIVA -->
+    <section id="view-juego" class="view active">
+      <div class="active-card-container" id="stage-card-wrapper">
+        <!-- Renderizado dinámico de la carta activa -->
+      </div>
+    </section>
+
+    <!-- VISTA: INICIO (HOME) -->
+    <section id="view-home" class="view">
+      <div class="home-viewport">
+        <div style="text-align:center;">
+          <div style="color:var(--color-primary);font-size:1.8rem;margin-bottom:4px;">✦</div>
+          <h1 style="font-family:var(--font-serif);font-size:2rem;color:var(--color-primary);margin-bottom:6px;">El Hombre del Saco</h1>
+          <div style="font-size:0.8rem;color:var(--color-text-muted);text-transform:uppercase;letter-spacing:1px;">Una aventura de rol de cartas</div>
+          <p style="font-size:0.88rem;color:var(--color-text);margin-top:12px;font-style:italic;line-height:1.5;" id="home-description"></p>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;">
+          <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px;text-align:center;">
+            <div style="font-size:1.2rem;">👥</div>
+            <div style="font-size:0.65rem;color:var(--color-text-muted);text-transform:uppercase;">Jugadores</div>
+            <div style="font-size:0.95rem;color:var(--color-primary);font-weight:600;" id="home-jugadores">2–4</div>
+          </div>
+          <div style="background:var(--color-surface-2);border:1px solid var(--color-border);border-radius:var(--radius-sm);padding:12px;text-align:center;">
+            <div style="font-size:1.2rem;">⏱️</div>
+            <div style="font-size:0.65rem;color:var(--color-text-muted);text-transform:uppercase;">Duración</div>
+            <div style="font-size:0.95rem;color:var(--color-primary);font-weight:600;" id="home-duracion">3–6h</div>
+          </div>
+        </div>
+
+        <div class="alert-callout" style="width:100%;">
+          <strong>⚠️ Nota de contenido:</strong>
+          <span id="home-nota" style="display:block;margin-top:4px;"></span>
+        </div>
+
+        <button class="btn-action-primary" style="width:100%;padding:14px;" onclick="App.navegarA('setup')">
+          ▶ Nueva partida
+        </button>
+
+        <button class="btn-action-secondary" id="btn-continuar" style="width:100%;display:none;" onclick="App.navegarA('juego')">
+          ↩ Continuar partida guardada
+        </button>
+
+        <button class="btn-action-secondary" style="width:100%;" onclick="App.navegarA('manual')">
+          📖 Leer las reglas completas
+        </button>
+
+        <button class="btn-action-secondary" id="btn-abandonar" style="width:100%;border-color:var(--color-danger);color:#f0a0a0;display:none;" onclick="App.confirmarResetear()">
+          ✕ Abandonar partida
+        </button>
+      </div>
+    </section>
+
+    <!-- VISTA: CONFIGURACIÓN DE PARTIDA (SETUP) -->
+    <section id="view-setup" class="view">
+      <div class="setup-viewport">
+        <h2 style="font-family:var(--font-serif);color:var(--color-primary);font-size:1.4rem;text-align:center;">Nueva Partida</h2>
+
+        <div class="content-block">
+          <div class="content-label">1. Número de jugadores</div>
+          <div style="display:flex;gap:8px;">
+            <button class="btn-action-secondary count-btn" data-count="2" onclick="App.actualizarSlotsJugadores(2)">2 Jugadores</button>
+            <button class="btn-action-secondary count-btn selected" data-count="3" onclick="App.actualizarSlotsJugadores(3)">3 Jugadores</button>
+            <button class="btn-action-secondary count-btn" data-count="4" onclick="App.actualizarSlotsJugadores(4)">4 Jugadores</button>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label">2. Nombres (toca 🪙 para asignar el primer turno)</div>
+          <div id="player-slots" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-top:auto;padding-top:16px;">
+          <button class="btn-action-secondary" onclick="App.navegarA('home')">← Volver</button>
+          <button class="btn-action-primary" onclick="App.iniciarPartida()">▶ Comenzar Aventura</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- VISTA: REGLAS (MANUAL) -->
+    <section id="view-manual" class="view">
+      <div class="rules-viewport">
+        <h2 style="font-family:var(--font-serif);color:var(--color-primary);font-size:1.3rem;">Reglas de Juego</h2>
+        
+        <div class="alert-callout">
+          <strong>Formato falso documental:</strong> Narrad siempre recordando en voz alta en primera persona y en pasado, como respondiendo a un entrevistador en 1970 sobre lo ocurrido en 1910.
+        </div>
+
+        <div class="content-block">
+          <div class="content-label">Desafíos y Tiradas (🪙)</div>
+          <div class="content-text">
+            El protagonista narra y lanza la moneda:
+            <ul style="margin:6px 0 0 16px;line-height:1.6;">
+              <li><strong>☀️ Cara:</strong> Resolución favorable.</li>
+              <li><strong>✖️ Cruz:</strong> Ayuda de un compañero (se activa Consecuencia 5: Amistad). Si vuelve a salir cruz, resolución desfavorable.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label">Coraje (💛)</div>
+          <div class="content-text">
+            Comienza en 6. En pruebas de Coraje fallidas, se reduce en 1. Al llegar a 1, el grupo debe realizar un descanso obligatorio al cambiar de localización.
+          </div>
+        </div>
+
+        <div class="content-block">
+          <div class="content-label">Iconos de referencia</div>
+          <div id="iconos-manual" style="display:flex;flex-direction:column;gap:6px;"></div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- BARRA DE NAVEGACIÓN INFERIOR (TABS DE ACCIÓN) -->
+  <nav class="bottom-nav">
+    <button class="bottom-tab active" data-view="juego" onclick="App.navegarA('juego')">
+      <span class="tab-icon">🃏</span>
+      <span class="tab-label">Escena</span>
+    </button>
+    <button class="bottom-tab" onclick="App.abrirModalLocalizaciones()">
+      <span class="tab-icon">🗺️</span>
+      <span class="tab-label">Mapa</span>
+    </button>
+    <button class="bottom-tab" onclick="App.abrirModalMesa()">
+      <span class="tab-icon">📋</span>
+      <span class="tab-label">Mesa</span>
+    </button>
+    <button class="bottom-tab" onclick="App.abrirModalMonedaRapida()">
+      <span class="tab-icon">🪙</span>
+      <span class="tab-label">Moneda</span>
+    </button>
+    <button class="bottom-tab" data-view="manual" onclick="App.navegarA('manual')">
+      <span class="tab-icon">📖</span>
+      <span class="tab-label">Reglas</span>
+    </button>
+  </nav>
+
+</div>
+
+<!-- MODAL / BOTTOM SHEET UNIVERSAL -->
+<div id="modal-overlay" class="modal-overlay">
+  <div class="modal-sheet">
+    <div class="modal-drag-handle"></div>
+    <div class="modal-sheet-header">
+      <span class="modal-sheet-title" id="modal-title">Detalle</span>
+      <button class="modal-sheet-close" id="modal-close" onclick="UI.closeModal()">✕</button>
+    </div>
+    <div class="modal-sheet-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div id="toast-container" class="toast-container"></div>
+
+<!-- DATOS DEL JUEGO (compatibilidad con doble clic local file:// y servidor web) -->
+<script src="data/manual.js"></script>
+<script src="data/narraciones.js"></script>
+<script src="data/localizaciones.js"></script>
+<script src="data/pistas.js"></script>
+<script src="data/consecuencias.js"></script>
+<script src="data/personajes.js"></script>
+<script src="data/coraje.js"></script>
+
+<!-- SCRIPTS DE LA APLICACIÓN -->
+<script src="js/sound.js"></script>
+<script src="js/state.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/app.js"></script>
+<script>
+  if ('serviceWorker' in navigator && window.location.protocol.startsWith('http')) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js').catch(() => {});
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+[
+  {
+    "id": 1,
+    "nombre": "La Cueva del barranco del Jalvo",
+    "cita": "\"¿La cueva? La cueva estaba situada en el barranco del Jalvo, un paraje a mitad de camino entre nuestro pueblo y Gádor. Era el típico sitio al que suelen ir los jóvenes en busca de aventuras\"",
+    "primera_visita": { "carta": 2 },
+    "condiciones": [
+      { "icono": "👤", "carta": 10 }
+    ],
+    "sin_coincidencia": null
+  },
+  {
+    "id": 2,
+    "nombre": "La casa de Bernardo",
+    "cita": "\"Bernardo vivía con su familia en una pequeña casa a la salida del pueblo. Solíamos quedar allí siempre que podíamos para jugar ya que quedaba relativamente cerca de dónde vivíamos todos\"",
+    "primera_visita": { "carta": 7 },
+    "condiciones": [
+      { "icono": "🫙", "carta": 12 }
+    ],
+    "sin_coincidencia": { "carta": 8 }
+  },
+  {
+    "id": 3,
+    "nombre": "La iglesia de Rioja",
+    "cita": "\"Por aquel entonces, la iglesia del pueblo era un sitio imponente y muy relevante. Rodeados de pobreza e incultura, pronto se convirtió en el centro de la actividad local y en el principal lugar de reunión de los vecinos\"",
+    "primera_visita": { "carta": 9 },
+    "condiciones": [],
+    "sin_coincidencia": null
+  },
+  {
+    "id": 4,
+    "nombre": "Botica de Gádor",
+    "cita": "\"En pleno centro de Gádor, en una de las calles más importantes del pueblo, estaba la Botica de Antonio Leona, una pequeña tienda donde la gente iba a buscar remedios para sus dolencias. Junto a la fachada, el dibujo de un león daba la bienvenida a los visitantes\"",
+    "primera_visita": { "carta": 16 },
+    "condiciones": [
+      { "icono": "💊", "carta": 22 },
+      { "icono": "🗝️", "carta": 24 }
+    ],
+    "sin_coincidencia": null
+  },
+  {
+    "id": 5,
+    "nombre": "Barbería",
+    "cita": "\"Un par de puertas más abajo de la botica de Gádor había una barbería. Era una pequeña casa de una planta, con la fachada bastante deteriorada en la que colgaba un cartel de madera indicando la barbería\"",
+    "primera_visita": { "carta": 19 },
+    "condiciones": [
+      { "icono": "✂️", "carta": 33 }
+    ],
+    "sin_coincidencia": { "carta": 20 }
+  },
+  {
+    "id": 6,
+    "nombre": "Cortijo de la Luna",
+    "cita": "\"El cortijo de la Luna era un antiguo y pequeño cortijo a las afueras de Gádor. En él vivía Agustina 'La curandera'. La gente solía referirse a este lugar como 'El consultorio'\"",
+    "primera_visita": { "carta": 27 },
+    "condiciones": [],
+    "sin_coincidencia": null
+  },
+  {
+    "id": "7A",
+    "nombre": "Cortijo de San Patricio",
+    "cita": "\"No muy lejos de Gádor, en mitad del campo y rodeado de plantaciones abandonadas, se encontraba el cortijo de San Patricio. A pesar de haber sido un cortijo importante en su momento, en aquel momento estaba casi abandonado y en estado ruinoso.\"",
+    "primera_visita": { "carta": 41 },
+    "zonas": [45, 44, 42],
+    "condiciones": [],
+    "sin_coincidencia": null
+  },
+  {
+    "id": "7B",
+    "nombre": "Cortijo de San Patricio (interior)",
+    "cita": "\"Al entrar en el cortijo nos llevamos una sorpresa. Lo que se suponía que era un edificio abandonado desde hace tiempo, de pronto cobraba vida como si de un viaje en el tiempo se tratase.\"",
+    "primera_visita": null,
+    "zonas": [45, 44, 42, 46, 47],
+    "condiciones": [],
+    "sin_coincidencia": null
+  },
+  {
+    "id": 8,
+    "nombre": "Bosque",
+    "cita": "\"Aquel bosque era una pequeña arboleda no demasiado lejos que se alejaba de Gádor. A pesar de ser bastante conocido, en mitad de la negrura de la noche y de la tormenta parecía un sitio totalmente desconocido\"",
+    "primera_visita": { "carta": 49 },
+    "condiciones": [],
+    "sin_coincidencia": null
+  },
+  {
+    "id": 9,
+    "nombre": "Risco",
+    "cita": "\"Muy cerca del cortijo, siguiendo un sendero, se podía llegar a un elevado risco. El sitio era bastante conocido ya que desde allí se podía tener una vista maravillosa de Gádor\"",
+    "primera_visita": { "carta": 48 },
+    "condiciones": [],
+    "sin_coincidencia": null
+  },
+  {
+    "id": 10,
+    "nombre": "La Cueva del barranco del Jalvo (noche)",
+    "cita": "\"Después de todo el día buscando a Bernardo, volvimos al lugar donde todo había empezado: la cueva del barranco del Jalvo. Sin embargo, el ambiente había cambiado por completo y nuestros ánimos también\"",
+    "primera_visita": { "carta": 50 },
+    "condiciones": [],
+    "sin_coincidencia": null
+  }
+]

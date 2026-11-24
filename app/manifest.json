@@ -1,0 +1,18 @@
+{
+  "name": "El Hombre del Saco",
+  "short_name": "Hombre del Saco",
+  "description": "App de apoyo narrativo y lectura para el juego de rol de cartas El Hombre del Saco",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0d0d0d",
+  "theme_color": "#0d0d0d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icons/icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
