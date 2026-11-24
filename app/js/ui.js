@@ -10,12 +10,12 @@ const UI = {
     this.toastContainer = document.getElementById('toast-container');
   },
 
-  toast(message, type = 'info', duration = 2800) {
+  toast(message, type = 'info', duration = 3400) {
     if (!this.toastContainer) return;
     const toast = document.createElement('div');
     toast.className = `toast ${type}`;
     const icons = { info: 'ℹ️', success: '✅', warning: '⚠️' };
-    toast.innerHTML = `<span>${icons[type] || '📢'}</span><span>${message}</span>`;
+    toast.innerHTML = `<span class="toast-icon">${icons[type] || '📢'}</span><span>${message}</span>`;
     this.toastContainer.appendChild(toast);
     setTimeout(() => {
       toast.style.opacity = '0';
@@ -124,11 +124,12 @@ const UI = {
     // ORDEN OFICIAL DE JUEGO SEGÚN MANUAL
     // ==========================================
 
-    // PASO 1: 🧠 Imagina (Lee en silencio para ambientarte)
+    // PASO 1: 🧠 Imagina (Lee en voz baja/silencio para ambientarte)
     if (narracion.imagina_texto) {
       scrollContentHtml += `
         <div class="content-block step-block">
-          <div class="content-label"><span class="step-num">1</span> 🧠 Imagina la escena <span class="step-hint">(Lee en silencio)</span></div>
+          <div class="read-badge-silent">🤫 Leer en voz baja para ti</div>
+          <div class="content-label"><span class="step-num">1</span> 🧠 Imagina la escena</div>
           <div class="content-text">${narracion.imagina_texto}</div>
         </div>
       `;
@@ -139,6 +140,7 @@ const UI = {
       const stepNum = narracion.imagina_texto ? '2' : '1';
       scrollContentHtml += `
         <div class="content-block step-block">
+          <div class="read-badge-silent">🤔 Piensa tus respuestas antes de hablar</div>
           <div class="content-label"><span class="step-num">${stepNum}</span> ❓ Preguntas para ${prot ? prot.nombre : 'el protagonista'}</div>
           <ul class="content-questions">
             ${narracion.preguntas_protagonista.map(q => `<li>${q}</li>`).join('')}
@@ -152,6 +154,7 @@ const UI = {
       const stepNum = (narracion.imagina_texto && narracion.preguntas_protagonista) ? '3' : '2';
       scrollContentHtml += `
         <div class="content-block step-block highlight-speech">
+          <div class="read-badge-aloud">🗣️ Leer en voz alta al resto del grupo</div>
           <div class="content-label"><span class="step-num">${stepNum}</span> 🗣️ Comienza tu relato en voz alta</div>
           <div class="narrative-quote">${narracion.narracion_inicial}</div>
         </div>
@@ -178,6 +181,7 @@ const UI = {
 
       scrollContentHtml += `
         <div class="content-block step-block">
+          <div class="read-badge-aloud">🗣️ Compañeros: responded en voz alta</div>
           <div class="content-label">🧑‍🤝‍🧑 Interacción: Preguntas para los compañeros</div>
           <ul class="content-questions interaction">
             ${interHtml}
@@ -435,18 +439,6 @@ const UI = {
         html += `</div>`;
       }
     }
-
-    // Botón de paso de turno horario
-    html += `
-      <div style="display:flex;gap:8px;">
-        <button class="btn-action-secondary" onclick="App.pasarTurno()">
-          🪙 Pasar turno al siguiente
-        </button>
-        <button class="btn-action-secondary" style="flex:0 0 44px;padding:0;" onclick="App.abrirModalMesa()" title="Ver mesa">
-          📋
-        </button>
-      </div>
-    `;
 
     return html;
   },

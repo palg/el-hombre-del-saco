@@ -3,7 +3,7 @@
  * Permite ejecutar la aplicación 100% offline y serverless
  */
 
-const CACHE_NAME = 'hds-cache-v5';
+const CACHE_NAME = 'hds-cache-v6';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',

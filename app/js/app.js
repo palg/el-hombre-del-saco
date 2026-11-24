@@ -44,21 +44,27 @@ const App = {
 
     // Inicializar UI y Sonido
     UI.init();
-    if (window.SoundEffects) SoundEffects.init();
 
     // Cargar partida guardada si existe
     GameState.cargarDesdeStorage();
 
-    // Ocultar pantalla de carga
-    setTimeout(() => {
-      document.getElementById('loading-screen').classList.add('hidden');
-    }, 400);
-
-    // Navegar a la pantalla adecuada
+    // Navegar a la pantalla adecuada detrás del splash
     if (GameState.partida.activa) {
       this.navegarA('juego');
     } else {
       this.navegarA('home');
+    }
+  },
+
+  // Transición suave al cerrar la pantalla Splash Screen
+  cerrarSplashScreen() {
+    if (window.SoundEffects) SoundEffects.init();
+    const splash = document.getElementById('splash-screen');
+    if (splash) {
+      splash.classList.add('fade-out');
+      setTimeout(() => {
+        splash.style.display = 'none';
+      }, 600);
     }
   },
 
@@ -180,10 +186,10 @@ const App = {
     const jugadores = GameState.partida.jugadores;
     const numJugadores = jugadores.length;
     // Pasos:
-    // 0: Entrevista del periodista en 1970
-    // 1 .. numJugadores: Presentación de cada jugador
+    // 0: Entrevista del periodista en 1970 (Tarjeta de inicio Cara A)
+    // 1 .. numJugadores: Presentación de cada jugador y personaje
     // numJugadores + 1: Conocer a Bernardo (Personaje 5)
-    // numJugadores + 2: Domingo de fiesta en 1910 y desaparición
+    // numJugadores + 2: Domingo de fiesta en 1910 (Tarjeta de inicio Cara B)
     const totalPasos = numJugadores + 3;
 
     let dotsHtml = '';
@@ -197,23 +203,28 @@ const App = {
     `;
 
     if (paso === 0) {
-      // Paso 0: El Periodista
+      // Paso 0: El Periodista (1970)
       bodyHtml += `
         <div class="content-block">
+          <div class="read-badge-silent">🤫 Leer en voz baja para ti antes de hablar</div>
           <div class="content-label" style="color:var(--color-accent-gold);">🎙️ 1970 — La entrevista del periodista</div>
+          
+          <div class="read-badge-aloud">🗣️ El protagonista lee en voz alta al grupo:</div>
           <div class="narrative-quote">
-            “Un periodista llega a Rioja (Almería) para investigar los trágicos sucesos ocurridos 60 años antes, en el verano de 1910. 
-            Coloca su grabadora sobre la mesa, pulsa 'REC' y os pide que hagáis memoria…”
+            “Año 1970. Almería.<br><br>
+            Una periodista nos ha reunido, a un grupo de antiguos amigos, para hacernos una entrevista sobre unos hechos que nos ocurrieron hace exactamente 60 años, en 1910, cuando éramos tan solo unos niños de entre 8 y 12 años.<br><br>
+            Nunca nos hemos atrevido a hablar abiertamente sobre aquello que ocurrió. Pero parece que después de tantos años estamos preparados para volver a rememorar aquel episodio y contar a todo el mundo lo que realmente ocurrió, con todo detalle.<br><br>
+            Estamos sentados alrededor de una mesa junto a ella.<br><br>
+            La periodista coloca una grabadora en el centro, inserta una cinta y pulsa el botón de grabar.”
           </div>
-          <div class="content-text" style="font-size:0.88rem;color:var(--color-text-dim);margin-top:6px;">
-            En esta primera ronda, cada uno de vosotros se presentará respondiendo a unas preguntas para definir la personalidad de su personaje en su infancia.
+
+          <div class="content-text" style="font-size:0.86rem;color:var(--color-text-dim);margin-top:6px;line-height:1.45;">
+            Coged vuestras cartas de personaje. En sentido horario, cada jugador irá siguiendo los pasos para presentarse y describir cómo era de niño cuando la historia ocurrió.
           </div>
-          <div style="display:flex;gap:8px;margin-top:14px;">
-            <button class="btn-action-primary" style="flex:1;" onclick="App.iniciarPrologoInteractivo(1)">
+
+          <div style="margin-top:14px;">
+            <button class="btn-action-primary" style="width:100%;" onclick="App.iniciarPrologoInteractivo(1)">
               Presentar a los protagonistas →
-            </button>
-            <button class="btn-action-secondary" style="flex:0 0 auto;" onclick="App.empezarNarracionInicial(); UI.closeModal();" title="Saltar al juego">
-              Saltar ⏭️
             </button>
           </div>
         </div>
@@ -223,32 +234,35 @@ const App = {
       const jIdx = paso - 1;
       const jugador = jugadores[jIdx];
       const pData = (GameState.data.personajes?.principales || [])[jIdx] || {
-        preguntas_protagonista: ['¿Cómo te llamas?', '¿Cómo eras de niño?', '¿Qué te gustaba hacer?'],
+        preguntas_protagonista: ['¿Puedes presentarte?', '¿Cómo eras de niño/a?', '¿A qué te dedicabas?', '¿Qué te gustaba hacer en tu tiempo libre?'],
         pregunta_interaccion: '¿Puedes contarnos algo de tu relación con este personaje?'
       };
 
       bodyHtml += `
         <div class="content-block">
+          <div class="read-badge-silent">🤫 Ronda de presentación de personajes (${paso} de ${numJugadores})</div>
           <div class="content-label" style="color:var(--color-primary-light);">
-            👤 Jugador ${paso} de ${numJugadores}: <strong>${jugador.nombre}</strong> (${jugador.rol})
+            👤 Presentación de: <strong>${jugador.nombre}</strong> (${jugador.rol})
           </div>
+
+          <div class="read-badge-aloud">🗣️ Lee en voz alta tu presentación:</div>
           <div class="narrative-quote">
             “Mi nombre es <strong>${jugador.nombre}</strong>. Bernardo era mi ${jugador.rol.toLowerCase().includes('hermano') ? 'hermano' : 'amigo'}. Por aquel entonces yo tenía… años…”
           </div>
-          <div class="content-label" style="margin-top:6px;">❓ Preguntas para que ${jugador.nombre} responda al grupo:</div>
+
+          <div class="read-badge-aloud" style="margin-top:8px;">🗣️ Responde en voz alta a las preguntas para que el grupo te conozca:</div>
           <ul class="content-questions">
             ${(pData.preguntas_protagonista || []).map(q => `<li>${q}</li>`).join('')}
           </ul>
-          <div class="content-label" style="margin-top:6px;">🧑‍🤝‍🧑 Para el resto de compañeros:</div>
+
+          <div class="read-badge-aloud" style="margin-top:8px;">🗣️ Los compañeros responden en voz alta:</div>
           <ul class="content-questions interaction">
-            <li>${pData.pregunta_interaccion || '¿Qué relación teníais de niños?'}</li>
+            <li>${pData.pregunta_interaccion || '¿Puedes contarnos algo de tu relación con este personaje?'}</li>
           </ul>
-          <div style="display:flex;gap:8px;margin-top:14px;">
-            <button class="btn-action-primary" style="flex:1;" onclick="App.iniciarPrologoInteractivo(${paso + 1})">
-              ${paso < numJugadores ? `Siguiente jugador (${jugadores[paso].nombre}) →` : 'Presentar a Bernardo →'}
-            </button>
-            <button class="btn-action-secondary" style="flex:0 0 auto;" onclick="App.empezarNarracionInicial(); UI.closeModal();">
-              Saltar ⏭️
+
+          <div style="margin-top:14px;">
+            <button class="btn-action-primary" style="width:100%;" onclick="App.iniciarPrologoInteractivo(${paso + 1})">
+              ${paso < numJugadores ? `Siguiente jugador (${jugadores[paso].nombre}) →` : 'Presentar a Bernardo (Personaje 5) →'}
             </button>
           </div>
         </div>
@@ -258,48 +272,60 @@ const App = {
       const bernardo = GameState.data.personajes?.secundarios?.find(s => s.id === 5) || {
         nombre: 'Bernardo',
         edad: 7,
-        cita: 'Bernardo era un niño tranquilo y amable...',
-        preguntas_protagonista: ['¿Cómo era Bernardo?', '¿Qué recuerdos tenéis juntos?']
+        cita: '“Bernardo era un niño tranquilo y amable. Siempre que se le presentaba la oportunidad le gustaba estar con nosotros. Aunque era el más pequeño, se adaptaba bien a nuestro ritmo…”',
+        preguntas_protagonista: ['¿Cómo era Bernardo?', '¿Qué le gustaba hacer en su tiempo libre?', '¿Recuerdas alguna anécdota con Bernardo?']
       };
 
       bodyHtml += `
         <div class="content-block">
+          <div class="read-badge-silent">🤫 Carta de Personaje 5 en la mesa</div>
           <div class="content-label" style="color:var(--color-accent-gold);">
             👦 Conoce a Bernardo (7 años) — Personaje 5
           </div>
+
+          <div class="read-badge-aloud">🗣️ Leed en voz alta el recuerdo de Bernardo:</div>
           <div class="narrative-quote">
-            ${bernardo.cita || '“Bernardo era un niño tranquilo y amable. Siempre que se le presentaba la oportunidad le gustaba estar con nosotros. Aunque era el más pequeño, se adaptaba bien a nuestro ritmo…”'}
+            ${bernardo.cita}
           </div>
-          <div class="content-label" style="margin-top:6px;">❓ Preguntas para todo el grupo:</div>
+
+          <div class="read-badge-aloud" style="margin-top:8px;">🗣️ Preguntas para que el grupo responda en voz alta:</div>
           <ul class="content-questions">
             ${(bernardo.preguntas_protagonista || []).slice(0, 3).map(q => `<li>${q}</li>`).join('')}
           </ul>
-          <div style="display:flex;gap:8px;margin-top:14px;">
-            <button class="btn-action-primary" style="flex:1;" onclick="App.iniciarPrologoInteractivo(${paso + 1})">
-              El domingo de fiesta →
-            </button>
-            <button class="btn-action-secondary" style="flex:0 0 auto;" onclick="App.empezarNarracionInicial(); UI.closeModal();">
-              Saltar ⏭️
+
+          <div class="content-text" style="font-size:0.86rem;color:var(--color-text-dim);margin-top:8px;line-height:1.45;">
+            Al terminar, el jugador protagonista cede su puesto al siguiente en sentido horario para rememorar el día de la festividad de 1910.
+          </div>
+
+          <div style="margin-top:14px;">
+            <button class="btn-action-primary" style="width:100%;" onclick="App.iniciarPrologoInteractivo(${paso + 1})">
+              El domingo de fiesta en Rioja →
             </button>
           </div>
         </div>
       `;
     } else {
-      // Paso final: Domingo de 1910 y desaparición
-      const tarjeta = GameState.data.manual?.tarjeta_inicio || {};
+      // Paso final: Domingo de fiesta en Rioja (Tarjeta de inicio Cara B)
       bodyHtml += `
         <div class="content-block">
-          <div class="content-label" style="color:var(--color-danger);">
-            🔔 Domingo, Verano de 1910 — Rioja (Almería)
+          <div class="read-badge-silent">🤫 El siguiente jugador toma la palabra</div>
+          <div class="content-label" style="color:var(--color-primary-light);">
+            🔔 Domingo por la mañana — Festividad de la Virgen del Rosario (Rioja, 1910)
           </div>
+
+          <div class="read-badge-aloud">🗣️ El nuevo protagonista lee en voz alta al grupo:</div>
           <div class="narrative-quote">
-            “Las campanas de la iglesia de Rioja repican llamando a misa y a fiesta. En las calles hay música, risas y bullicio.
-            Salís todos juntos a jugar por el pueblo… Bernardo corretea alegremente entre el gentío. 
-            Sin embargo, al cabo de unas horas, os dais cuenta de algo aterrador: <strong>Bernardo ha desaparecido.</strong>”
+            “Cuando cierro los ojos, a veces aun a día de hoy, mi mente se transporta a mil novecientos diez, a aquel pequeño pueblo de Rioja, en Almería. Era por la mañana, un domingo. La luz del sol acariciaba las calles empedradas y las casas blancas, mientras una brisa fresca traía consigo el aroma de la tierra y el eco distante de la naturaleza. Las campanas de la iglesia resonaban suavemente, marcando el ritmo de un día especial: la festividad de la Virgen del Rosario, patrona de Rioja.<br><br>
+            Caminábamos por las calles del pueblo. El ambiente era una mezcla de calma y devoción. Familias charlando animadamente mientras afinaban los últimos detalles de los preparativos.<br><br>
+            Pero nosotros seguimos con nuestro recorrido. Dejamos atrás las calles empedradas y nos dirigimos hacia las afueras del pueblo. Los campos se extendían ante nosotros, verdes y vastos, bajo un cielo azul que parecía infinito.<br><br>
+            Y allí estábamos nosotros, un grupo de niños corriendo, saltando y jugando en el campo, con nuestras risas resonando como campanillas en la brisa matutina. Niños obligados a vivir vidas de adultos, pero que por fin aquel día, podríamos disfrutar de un merecido descanso.”
           </div>
-          <button class="btn-action-primary" style="margin-top:14px;padding:12px;font-size:0.95rem;font-weight:bold;" onclick="App.empezarNarracionInicial(); UI.closeModal();">
-            ▶ ¡Comenzar la aventura con Narración 1!
-          </button>
+
+          <div style="margin-top:16px;">
+            <button class="btn-action-primary" style="width:100%;padding:14px;font-size:1rem;font-weight:bold;" onclick="App.empezarNarracionInicial(); UI.closeModal();">
+              ▶ Coger la carta de Narración 1
+            </button>
+          </div>
         </div>
       `;
     }
@@ -554,7 +580,7 @@ const App = {
     UI.actualizarHUD();
     GameState.partida.narracionActual = null;
     GameState.guardarEnStorage();
-    this.abrirModalLocalizaciones();
+    this.abrirModalLocalizaciones(true);
   },
 
   // === LOCALIZACIONES & VIAJES ===
@@ -606,7 +632,8 @@ const App = {
       if (lineaKey === 'primera_visita' && locData.cita) {
         const content = `
           <div class="content-block">
-            <div class="content-label">🗣️ Relato en voz alta (Recuerdo del lugar):</div>
+            <div class="read-badge-aloud">🗣️ Leer en voz alta al llegar al lugar</div>
+            <div class="content-label">🗣️ Recuerdo del lugar:</div>
             <div class="narrative-quote">${locData.cita}</div>
             <button class="btn-action-primary" style="margin-top:14px;" onclick="UI.closeModal(); App.irANarracion(${narracionId});">
               ▶ Entrar y explorar
@@ -618,14 +645,69 @@ const App = {
         this.irANarracion(narracionId);
       }
     } else {
-      // Sin hallazgos adicionales (lugar ya explorado)
-      GameState.partida.narracionActual = null;
-      GameState.guardarEnStorage();
-      this.renderJuego();
+      // Sin hallazgos adicionales (lugar ya explorado):
+      // Mostrar pantalla explicativa clara y botones para elegir otra localización
+      this.mostrarLugarExplorado(locData);
     }
   },
 
-  _renderListaLocalizacionesHtml() {
+  // Pantalla cuando se viaja a una localización sin eventos nuevos disponibles
+  mostrarLugarExplorado(locData) {
+    GameState.partida.narracionActual = null;
+    GameState.guardarEnStorage();
+    UI.actualizarHUD();
+
+    const container = document.getElementById('stage-card-wrapper');
+    if (!container) return;
+
+    // Obtener otras localizaciones desbloqueadas para viajar
+    const otrasLocs = GameState.partida.localizaciones_en_juego
+      .filter(l => String(l.id) !== String(locData.id))
+      .map(l => ({
+        locEstado: l,
+        locData: GameState.data.localizaciones.find(x => String(x.id) === String(l.id))
+      }))
+      .filter(x => x.locData);
+
+    let botonesViajeHtml = '';
+    if (otrasLocs.length) {
+      botonesViajeHtml = otrasLocs.map(o => `
+        <button class="btn-action-primary" onclick="App.viajarALocalizacion('${o.locData.id}')">
+          🗺️ Viajar a: ${o.locData.nombre}
+        </button>
+      `).join('');
+    } else {
+      botonesViajeHtml = `
+        <div class="alert-callout">No hay otras localizaciones disponibles en este momento.</div>
+      `;
+    }
+
+    container.innerHTML = `
+      <div class="stage-card">
+        <div class="stage-card-header">
+          <span class="stage-card-badge">Lugar explorado</span>
+          <span class="stage-card-title">${locData.nombre}</span>
+          <span class="stage-card-number">📍</span>
+        </div>
+        <div class="stage-card-scroll">
+          <div class="content-block">
+            <div class="content-label" style="color:var(--color-accent-gold);">🔍 Inspección completa del lugar</div>
+            <div class="alert-callout" style="border-color:var(--color-primary);font-size:0.92rem;line-height:1.55;">
+              Habéis registrado a fondo <strong>${locData.nombre}</strong>. En este momento no encontráis nada nuevo ni ninguna pista adicional que os ayude a dar con Bernardo.
+            </div>
+            <div class="content-text" style="margin-top:12px;">
+              Debéis elegir otra localización en el mapa para continuar la búsqueda:
+            </div>
+            <div class="decision-button-stack" style="margin-top:12px;">
+              ${botonesViajeHtml}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+
+  _renderListaLocalizacionesHtml(puedeViajar = false) {
     const locsEnJuego = GameState.partida.localizaciones_en_juego;
     if (!locsEnJuego.length) {
       return '<div class="empty-state-box">No hay localizaciones en juego todavía.</div>';
@@ -634,15 +716,35 @@ const App = {
     return locsEnJuego.map(loc => {
       const lData = GameState.data.localizaciones.find(l => String(l.id) === String(loc.id));
       const esActual = String(GameState.partida.localizacionActual) === String(loc.id);
+
+      let badgeHtml = '';
+      if (esActual) {
+        badgeHtml = '<span class="tag-badge" style="background:var(--color-primary);color:#070c0b;font-weight:bold;">Actual</span>';
+      } else if (loc.visitada) {
+        badgeHtml = '<span class="tag-badge">Visitada</span>';
+      } else {
+        badgeHtml = '<span class="tag-badge" style="border-color:var(--color-accent-gold);color:var(--color-accent-gold);">Por explorar</span>';
+      }
+
+      let clickAttr = '';
+      let actionTag = '';
+      if (puedeViajar && !esActual) {
+        clickAttr = `onclick="App.viajarALocalizacion('${loc.id}')" style="cursor:pointer;"`;
+        actionTag = '<span style="color:var(--color-primary-light);font-size:0.8rem;font-weight:bold;margin-left:auto;">Viajar →</span>';
+      } else {
+        clickAttr = 'style="cursor:default;"';
+      }
+
       return `
-        <div class="drawer-item-card" onclick="App.viajarALocalizacion('${loc.id}')">
+        <div class="drawer-item-card" ${clickAttr}>
           <div class="drawer-item-icon">📍</div>
           <div class="drawer-item-content">
             <div class="drawer-item-title">
               <span>${lData ? lData.nombre : `Loc ${loc.id}`}</span>
-              ${esActual ? '<span class="tag-badge">Actual</span>' : '<span style="color:var(--color-primary);font-size:0.75rem;">Viajar →</span>'}
+              ${badgeHtml}
             </div>
-            ${lData && lData.cita ? `<div class="drawer-item-desc">${lData.cita.substring(0, 90)}…</div>` : ''}
+            ${lData && lData.cita ? `<div class="drawer-item-desc">${lData.cita.substring(0, 95)}…</div>` : ''}
+            ${actionTag}
           </div>
         </div>
       `;
@@ -650,12 +752,23 @@ const App = {
   },
 
   // === MODALES DE ICONOS SUPERIORES ===
-  abrirModalLocalizaciones() {
+  abrirModalLocalizaciones(forzarViaje = false) {
+    const puedeViajar = forzarViaje || (GameState.partida.narracionActual === null);
     const content = `
       <div class="content-block">
-        <div class="content-label">🗺️ Mapa de Localizaciones</div>
+        <div class="content-label">🗺️ Localizaciones en Juego</div>
+        ${!puedeViajar ? `
+          <div class="alert-callout" style="border-color:var(--color-primary);margin-bottom:8px;">
+            🔒 <strong>Escena en curso:</strong> Estáis resolviendo la Carta #${GameState.partida.narracionActual}. 
+            El mapa es solo de consulta; únicamente podréis viajar cuando la historia lo indique al terminar la escena.
+          </div>
+        ` : `
+          <div class="alert-callout" style="margin-bottom:8px;">
+            🗺️ Seleccionad una localización en el mapa para viajar e investigar.
+          </div>
+        `}
         <div class="grid-cards-list">
-          ${this._renderListaLocalizacionesHtml()}
+          ${this._renderListaLocalizacionesHtml(puedeViajar)}
         </div>
       </div>
     `;
@@ -1052,25 +1165,22 @@ const App = {
 
     const items = [];
 
-    // Narraciones
-    (GameState.data.narraciones || []).forEach(n => {
-      if (String(n.id) === q || (n.titulo || '').toLowerCase().includes(q) || (n.imagina_texto || '').toLowerCase().includes(q)) {
-        items.push({
-          badge: 'Narración',
-          titulo: `Narración ${n.id}: ${n.titulo || ''}`,
-          desc: (n.imagina_texto || n.narracion_inicial || '').substring(0, 80) + '…',
-          accion: () => {
-            UI.closeModal();
-            if (GameState.partida.activa) {
-              App.navegarA('juego');
-              App.irANarracion(n.id);
-            } else {
-              UI.toast('Inicia una partida para navegar', 'info');
+    // Reglas e Iconos
+    if (GameState.data.manual?.iconos) {
+      Object.entries(GameState.data.manual.iconos).forEach(([icono, texto]) => {
+        if (icono.includes(q) || texto.toLowerCase().includes(q)) {
+          items.push({
+            badge: 'Regla / Icono',
+            titulo: `${icono} ${texto.split(':')[0]}`,
+            desc: texto.split(':')[1] || texto,
+            accion: () => {
+              UI.closeModal();
+              App.navegarA('manual');
             }
-          }
-        });
-      }
-    });
+          });
+        }
+      });
+    }
 
     // Pistas
     (GameState.data.pistas || []).forEach(p => {
@@ -1131,15 +1241,24 @@ const App = {
   renderManual() {
     const iconosEl = document.getElementById('iconos-manual');
     if (iconosEl && GameState.data.manual?.iconos) {
-      iconosEl.innerHTML = Object.entries(GameState.data.manual.iconos).map(([k, v]) => `
-        <div class="drawer-item-card" style="cursor:default;">
-          <div class="drawer-item-icon">${k}</div>
-          <div class="drawer-item-content">
-            <div class="drawer-item-title"><span>${k}</span></div>
-            <div class="drawer-item-desc">${v}</div>
+      iconosEl.innerHTML = Object.entries(GameState.data.manual.iconos).map(([k, v]) => {
+        let titulo = k;
+        let descripcion = v;
+        if (v && v.includes(':')) {
+          const parts = v.split(':');
+          titulo = parts[0].trim();
+          descripcion = parts.slice(1).join(':').trim();
+        }
+        return `
+          <div class="drawer-item-card" style="cursor:default;">
+            <div class="drawer-item-icon">${k}</div>
+            <div class="drawer-item-content">
+              <div class="drawer-item-title"><span>${titulo}</span></div>
+              <div class="drawer-item-desc">${descripcion}</div>
+            </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
   },
 

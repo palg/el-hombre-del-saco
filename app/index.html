@@ -12,10 +12,22 @@
 </head>
 <body>
 
-<!-- PANTALLA DE CARGA -->
-<div id="loading-screen">
-  <div class="loading-title">El Hombre del Saco</div>
-  <div class="loading-spinner"></div>
+<!-- PANTALLA SPLASH SCREEN INICIAL ATMOSFÉRICA -->
+<div id="splash-screen">
+  <div class="splash-container">
+    <div class="splash-badge">Almería, 1910 — Basado en hechos reales</div>
+    <h1 class="splash-title">El Hombre del Saco</h1>
+    <div class="splash-ornament"><span>✦ ❖ ✦</span></div>
+    <p class="splash-subtitle">Juego de Cartas de Rol Narrativo</p>
+    <div class="splash-quote">
+      “Una historia de misterio, memoria y decisiones donde cada palabra que pronuncies cuenta...”
+    </div>
+    <button id="btn-enter-app" class="splash-btn" onclick="App.cerrarSplashScreen()">
+      <span>Entrar a la Experiencia</span>
+      <span class="splash-btn-arrow">▶</span>
+    </button>
+  </div>
+  <div class="splash-footer">Adaptación digital interactiva</div>
 </div>
 
 <!-- APLICACIÓN PRINCIPAL (100dvh, SIN SCROLL DE PANTALLA) -->
@@ -38,11 +50,6 @@
         <span>💛</span>
         <span id="hud-coraje-val">6</span>
       </div>
-
-      <!-- Botón de búsqueda rápida -->
-      <button class="nav-icon-btn" onclick="App.abrirBuscador()" title="Buscar carta o regla">
-        🔍
-      </button>
 
       <!-- Botón de Menú de Partida / Nueva Partida / Opciones -->
       <button class="nav-icon-btn" onclick="App.abrirMenuPartida()" title="Menú de partida y opciones">
